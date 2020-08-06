@@ -1,24 +1,15 @@
 const express = require('express')
-const db = require('./db/postgres')
-
+const userRoutes = require('./routers/user')
+const friendRoutes = require('./routers/friends')
 
 const app = express()
 const port = process.env.PORT
 
+app.use(express.json())
+app.use(userRoutes)
+app.use(friendRoutes)
 
 
-db.authenticate().then(()=>{
-    console.log('DB connected')
-}).catch((e)=>{
-    console.log(e)
-})
-
-
-
-
-app.get('/',(req,res)=>{
-    res.send('Index')
-})
 
 app.listen(port,()=>{
     console.log(`server is up and running on port ${port}`)
