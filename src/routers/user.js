@@ -17,8 +17,13 @@ router.post('/createUser',async (req, res)=>{
 })
 
 router.get('/allUsers', async(req,res)=>{
+    const pageNo = parseInt(req.query.pageNo)
+    const pageSize = parseInt(req.query.pageSize)
+
     const users = await User.findAll({
-        attributes: ['user_id','username', 'firstName','lastName','avatar']
+        attributes: ['user_id','username', 'firstName','lastName','avatar'],
+        offset:(pageNo-1)*pageSize,
+        limit:pageSize
     })
     res.status(200).send(users)
 })
@@ -43,10 +48,14 @@ router.get('/user/:id',async (req,res)=>{
 router.get('/user/:id/friends', async (req,res)=>{
     try{
         const userId = req.params.id
+        const pageNo = parseInt(req.query.pageNo)
+        const pageSize = parseInt(req.query.pageSize)
         const user = await User.findByPk(userId)
         // console.log(user.username)
         const friendsList = await user.getFriends({
-            attributes: ['user_id','username', 'firstName','lastName','avatar']
+            attributes: ['user_id','username', 'firstName','lastName','avatar'],
+            offset:(pageNo-1)*pageSize,
+            limit:pageSize
         })
         const responseList = friendsList.map((friend)=>(
             {
