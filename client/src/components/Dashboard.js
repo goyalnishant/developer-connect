@@ -17,11 +17,11 @@ export default class Dashboard extends React.Component{
     async componentDidMount(){
         try{
             console.log('Fetching all users')
-            let response = await api.get('/allUsers?pageNo=1&pageSize=2')
+            let response = await api.get('/allUsers?pageNo=1&pageSize=5')
             const allUsers = response.data
             const selectedUser = allUsers[0]
             const user_id = selectedUser.user_id
-            response = await api.get(`/user/${user_id}/friends?pageNo=1&pageSize=1`)
+            response = await api.get(`/user/${user_id}/friends?pageNo=1&pageSize=3`)
             const friends = response.data
             this.setState(()=>({
                 allUsers,
@@ -34,7 +34,7 @@ export default class Dashboard extends React.Component{
     }
 
     receivedNextUsers = async () =>{
-        const response = await api.get(`/allUsers?pageNo=${this.state.currentPageUser}&pageSize=2`)
+        const response = await api.get(`/allUsers?pageNo=${this.state.currentPageUser}&pageSize=5`)
         const allUsers = response.data
         this.setState(()=>({
             allUsers
@@ -42,7 +42,7 @@ export default class Dashboard extends React.Component{
     }
 
     receivedNextFriends = async () =>{
-        const response = await api.get(`/user/${this.state.selectedUser.user_id}/friends?pageNo=${this.state.currentPageFriend}&pageSize=1`)
+        const response = await api.get(`/user/${this.state.selectedUser.user_id}/friends?pageNo=${this.state.currentPageFriend}&pageSize=3`)
         const friends = response.data
         this.setState(()=>({
             friends
@@ -73,7 +73,7 @@ export default class Dashboard extends React.Component{
             let response = await api.get(`/user/${id}`)
             const selectedUser = response.data
             const user_id = selectedUser.user_id
-            response = await api.get(`/user/${user_id}/friends?pageNo=1&pageSize=1`)
+            response = await api.get(`/user/${user_id}/friends?pageNo=1&pageSize=3`)
             const friends = response.data
             this.setState(()=>({
                 selectedUser,
