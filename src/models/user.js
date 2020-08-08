@@ -47,16 +47,6 @@ const User = db.define('user',{
     }
 })
 
-const Friendship = db.define('friendships', {
-    userId: {
-      type: Sequelize.INTEGER
-    },
-  
-    friendId: {
-      type: Sequelize.INTEGER
-    }  
-  })
-
 User.sync().then(()=>{
     console.log('User Table created')
 })

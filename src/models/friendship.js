@@ -2,13 +2,14 @@ const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db/postgres')
 const User = require('./user')
 
+
 const Friendship = db.define('friendships', {
     userId: {
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
   
     friendId: {
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     }  
   })
 
